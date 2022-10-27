@@ -7,10 +7,15 @@ Modify the scripts and deploy them on Hardhat local node.
 Add configuration for deployment on Goerli. Note and save your deployed contract address.
 --not done no ether.
 Implement testing scenarios for the Book Library contract
+--done
 Think about more use cases to cover in the tests
+--semi done?
 Run Solidity Coverage Report
+--85%, missing coverage for getAllAvailableBooks func
 Try to hit 100% coverage for your Smart Contract
+-- WIP
 Create Hardhat tasks for deployment
 Create subtasks for printing valuable info after deployment
 Read any sensitive data (account private keys, API key and etc. from .env file)
+--done
 Add to the deployment tasks subtasks for Etherscan verification of the contracts
