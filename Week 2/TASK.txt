@@ -1,0 +1,16 @@
+Create a Hardhat project for your Book Library contracts and put it in a GitHub repository.
+--done
+Read about OpenZeppelin and modify the contract to use OpenZeppelin Ownable instead of your own.
+--done
+Modify the scripts and deploy them on Hardhat local node.
+--done
+Add configuration for deployment on Goerli. Note and save your deployed contract address.
+--not done no ether.
+Implement testing scenarios for the Book Library contract
+Think about more use cases to cover in the tests
+Run Solidity Coverage Report
+Try to hit 100% coverage for your Smart Contract
+Create Hardhat tasks for deployment
+Create subtasks for printing valuable info after deployment
+Read any sensitive data (account private keys, API key and etc. from .env file)
+Add to the deployment tasks subtasks for Etherscan verification of the contracts
