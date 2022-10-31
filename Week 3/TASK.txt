@@ -1,0 +1,8 @@
+Create a script interacting with your library on your local node that:
+
+Creates a book
+Checks all available books
+Rents a book
+Checks that it is rented
+Returns the book
+Checks the availability of the book
