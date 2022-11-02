@@ -1,8 +1,13 @@
 Create a script interacting with your library on your local node that:
 
 Creates a book
+--done
 Checks all available books
+--done
 Rents a book
+--gets book but stuff is undefined?
 Checks that it is rented
+--done
 Returns the book
+--issue
 Checks the availability of the book
