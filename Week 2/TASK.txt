@@ -5,15 +5,15 @@ Read about OpenZeppelin and modify the contract to use OpenZeppelin Ownable inst
 Modify the scripts and deploy them on Hardhat local node.
 --done
 Add configuration for deployment on Goerli. Note and save your deployed contract address.
---not done no ether.
+--addr: 0xAbec5C016DF4A8972F61a5Cd10b8aE4e5C2BA109
 Implement testing scenarios for the Book Library contract
 --done
 Think about more use cases to cover in the tests
 --semi done?
 Run Solidity Coverage Report
---85%, missing coverage for getAllAvailableBooks func
+--85%, other 15% covered in week3 test file
 Try to hit 100% coverage for your Smart Contract
--- WIP
+-- done in week 3
 Create Hardhat tasks for deployment
 Create subtasks for printing valuable info after deployment
 Read any sensitive data (account private keys, API key and etc. from .env file)

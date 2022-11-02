@@ -9,6 +9,7 @@ async function main() {
 
   const Library = await ethers.getContractFactory("Library");
   const lib = await Library.deploy();
+  await lib.deployed();
 
   console.log("Library address: ", lib.address);
 }
