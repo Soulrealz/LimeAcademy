@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-
-import "../node_modules/hardhat/console.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Library is Ownable {
     struct Book { 
@@ -38,7 +36,6 @@ contract Library is Ownable {
     }
 
     function addNewBooks(uint _bookId, string calldata _bookName, uint _copies) public onlyOwner {
-        console.log("??");
         require(__idToBook[_bookId].bookId == 0, "This index already exists.");
         require(_copies > 0, "Cannot add books with zero copies.");
 

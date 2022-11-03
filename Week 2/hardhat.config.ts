@@ -16,7 +16,7 @@ const config: HardhatUserConfig = {
   networks: {
     goerli: {
       url: INFURA,
-      accounts: [`0x${key}`]
+      accounts: [`${key}`]
     }
   },
   etherscan: {

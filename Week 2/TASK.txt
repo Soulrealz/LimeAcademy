@@ -5,7 +5,7 @@ Read about OpenZeppelin and modify the contract to use OpenZeppelin Ownable inst
 Modify the scripts and deploy them on Hardhat local node.
 --done
 Add configuration for deployment on Goerli. Note and save your deployed contract address.
---addr: 0xAbec5C016DF4A8972F61a5Cd10b8aE4e5C2BA109
+--addr: 0x5DdF1065Cc9ebE240346AD09CC94974E4AbF5A30
 Implement testing scenarios for the Book Library contract
 --done
 Think about more use cases to cover in the tests

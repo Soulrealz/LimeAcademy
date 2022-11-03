@@ -18,7 +18,10 @@ const run = async function() {
     console.log(books[1].bookName);
 
     console.log("Borrowing and checking if book is indeed borrowed");
+    ///////
     const book: Library.BookStructOutput = await contract.borrowBook(2);
+
+    //
     console.log("Book info: ", book.bookId, " ", book.bookName); //undefined??
     const isRented: boolean = await contract.isCurrentlyBorrowingBook(2);
     console.log("Is rented: ", isRented);
