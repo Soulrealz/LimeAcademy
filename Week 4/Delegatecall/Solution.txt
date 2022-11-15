@@ -1,0 +1,1 @@
+Library in solidity should be stateless, or at the very minimum when using delegate call then vars have to be ordered the same way.

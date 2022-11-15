@@ -1,0 +1,1 @@
+blockhash and block.timestamp should not be used as sources of randomness. If offchain is not an alternative then Oracles are a good workaround.

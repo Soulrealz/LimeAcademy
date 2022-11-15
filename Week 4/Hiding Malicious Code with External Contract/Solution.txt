@@ -1,0 +1,1 @@
+A way to avoid this would be to initialzie a new contract instance inside the constructor: bar = new Bar();

@@ -1,0 +1,1 @@
+If balance is kept in a var instead of: uint balance = address(this).balance; then that attack will not be possible.

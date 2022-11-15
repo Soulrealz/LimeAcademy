@@ -1,0 +1,1 @@
+Upgrading contract to 0.8 from 0.7 is enough as 0.8 throws error on over/under flow

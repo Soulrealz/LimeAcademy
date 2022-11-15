@@ -1,0 +1,6 @@
+Allow user to withdraw their ether instead of sending it.
+
+eg:
+    1.Create mapping in KingOfEther to track balances of addresses
+    2.Update balance mapping upon new king ascending the throne
+    3.Withdraw function that lets users withdraw their ether, excluding the current king

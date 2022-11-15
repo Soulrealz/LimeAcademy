@@ -1,0 +1,1 @@
+All sensitive data (password in this case) should be stored off chain.
