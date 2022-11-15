@@ -1,0 +1,1 @@
+block.timestamp should not be used as source of entropy. Use offchain resources or oracles.
