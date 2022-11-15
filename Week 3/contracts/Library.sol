@@ -23,6 +23,11 @@ contract Library is Ownable {
     error CannotBorrowMoreCopies();
     error NoCopiesOwned();
 
+    event NewBookAdded(uint bookId, string bookName);
+    event CopiesAddedToBook(uint bookId, uint newCopiesAmount);
+    event BookBorrowed(uint bookId, string bookName, uint availableCopies);
+    event BookReturned(uint bookId);
+
 
     modifier onlyExistingIndex(uint _bookId) {
         if (__idToBook[_bookId].bookId == 0) {
@@ -35,7 +40,7 @@ contract Library is Ownable {
         countOfAvailableBooks = 0;
     }
 
-    function addNewBooks(uint _bookId, string calldata _bookName, uint _copies) public onlyOwner {
+    function addNewBook(uint _bookId, string calldata _bookName, uint _copies) public onlyOwner {
         require(__idToBook[_bookId].bookId == 0, "This index already exists.");
         require(_copies > 0, "Cannot add books with zero copies.");
 
@@ -43,6 +48,8 @@ contract Library is Ownable {
         __idToBook[_bookId] = Book(_bookId, _copies, _bookName, empty);
         __bookIds.push(_bookId);
         countOfAvailableBooks++;
+
+        emit NewBookAdded(_bookId, _bookName);
     }
 
     function addCopiesToExistingBook(uint _bookId, uint _copies) public onlyOwner onlyExistingIndex(_bookId) {
@@ -52,8 +59,11 @@ contract Library is Ownable {
         }
 
         __idToBook[_bookId].availableCopies += _copies;
+
+        emit CopiesAddedToBook(_bookId, __idToBook[_bookId].availableCopies);
     }
 
+    //TODO: REMOVE
     function getAllAvailableBooks() public view returns(Book[] memory available) {
         available = new Book[](countOfAvailableBooks);
         uint availableCounter = 0;
@@ -65,7 +75,7 @@ contract Library is Ownable {
         }
     }
 
-    function borrowBook(uint _bookId) external onlyExistingIndex(_bookId) returns(Book memory desiredBook) {
+    function borrowBook(uint _bookId) external onlyExistingIndex(_bookId) {
         if (bookAddressesCurrentlyBorrowing[_bookId][msg.sender] == true) {
             revert CannotBorrowMoreCopies();
         }
@@ -74,15 +84,15 @@ contract Library is Ownable {
             revert NoCopiesAvailable();
         }
 
-        desiredBook = __idToBook[_bookId];
         __idToBook[_bookId].availableCopies--;
-
         if (__idToBook[_bookId].availableCopies == 0) {
             countOfAvailableBooks--;
         }
 
         __idToBook[_bookId].allBorrowers.push(msg.sender);
-        bookAddressesCurrentlyBorrowing[_bookId][msg.sender] = true;        
+        bookAddressesCurrentlyBorrowing[_bookId][msg.sender] = true;  
+
+        emit BookBorrowed(_bookId, __idToBook[_bookId].bookName, __idToBook[_bookId].availableCopies);      
     }
 
     function getBorrowedBook(uint _bookId) external view returns(Book memory) {
@@ -93,16 +103,18 @@ contract Library is Ownable {
         return __idToBook[_bookId];
     }
 
-    function returnBook(Book calldata book) external onlyExistingIndex(book.bookId) {
-        if (bookAddressesCurrentlyBorrowing[book.bookId][msg.sender] == false) {
+    function returnBook(uint _bookId) external onlyExistingIndex(_bookId) {
+        if (bookAddressesCurrentlyBorrowing[_bookId][msg.sender] == false) {
             revert NoCopiesOwned();
         }
 
-        __idToBook[book.bookId].availableCopies++;
-        if (__idToBook[book.bookId].availableCopies == 1) {
+        __idToBook[_bookId].availableCopies++;
+        if (__idToBook[_bookId].availableCopies == 1) {
             countOfAvailableBooks++;
         }
-        bookAddressesCurrentlyBorrowing[book.bookId][msg.sender] = false;
+        bookAddressesCurrentlyBorrowing[_bookId][msg.sender] = false;
+
+        emit BookReturned(_bookId);
     }
 
     function isCurrentlyBorrowingBook(uint _bookId) external view returns (bool) {

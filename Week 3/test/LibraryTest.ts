@@ -25,8 +25,8 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
-    await library.addNewBooks(2, "Beyond the Dark Portal", 32);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(2, "Beyond the Dark Portal", 32);
 
     expect(await library.countOfAvailableBooks()).to.equal(2);
   })
@@ -36,10 +36,10 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
-    await expect(library.connect(addr1).addNewBooks(2, "Silvermoon", 3)).to.be.revertedWith("Ownable: caller is not the owner");
-    await expect(library.addNewBooks(DEFAULT_TEST_ID, "The Sundering", DEFAULT_TEST_COPY_AMOUNT)).to.be.revertedWith("This index already exists.");
-    await expect(library.addNewBooks(2, "The Frozen Throne", 0)).to.be.revertedWith("Cannot add books with zero copies.");
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await expect(library.connect(addr1).addNewBook(2, "Silvermoon", 3)).to.be.revertedWith("Ownable: caller is not the owner");
+    await expect(library.addNewBook(DEFAULT_TEST_ID, "The Sundering", DEFAULT_TEST_COPY_AMOUNT)).to.be.revertedWith("This index already exists.");
+    await expect(library.addNewBook(2, "The Frozen Throne", 0)).to.be.revertedWith("Cannot add books with zero copies.");
   })
 
   it('should add copies to existing books', async () => {    
@@ -48,7 +48,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
     expect(await library.countOfAvailableBooks()).to.equal(1);
 
     await library.borrowBook(DEFAULT_TEST_ID);
@@ -65,7 +65,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
     await expect(library.connect(addr1).addCopiesToExistingBook(DEFAULT_TEST_ID, 10)).to.be.revertedWith("Ownable: caller is not the owner");
     await expect(library.addCopiesToExistingBook(5, 10)).to.be.revertedWithCustomError(Library, 'InvalidBookIndex');
   })
@@ -74,7 +74,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
 
     await library.borrowBook(DEFAULT_TEST_ID);
     const book: Library.BookStructOutput = await library.getBorrowedBook(DEFAULT_TEST_ID);
@@ -90,7 +90,7 @@ describe("Library", function () {
 
     await expect(library.borrowBook(DEFAULT_TEST_ID)).to.be.revertedWithCustomError(Library, 'InvalidBookIndex');
     
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
     await library.borrowBook(DEFAULT_TEST_ID);
     await expect(library.borrowBook(DEFAULT_TEST_ID)).to.be.revertedWithCustomError(Library, 'CannotBorrowMoreCopies');
 
@@ -103,7 +103,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
     await library.borrowBook(DEFAULT_TEST_ID);
     const book: Library.BookStructOutput = await library.getBorrowedBook(DEFAULT_TEST_ID);
     await library.returnBook(book);
@@ -122,7 +122,7 @@ describe("Library", function () {
     };
     await expect(library.returnBook(book)).to.be.revertedWithCustomError(Library, 'InvalidBookIndex');
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
     expect(library.returnBook(book)).to.be.revertedWithCustomError(Library, 'NoCopiesOwned');
   })
 
@@ -130,7 +130,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
     expect(await library.countOfAvailableBooks()).to.equal(1);
 
     await library.borrowBook(DEFAULT_TEST_ID);
@@ -145,7 +145,7 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, 1);
     expect(await library.countOfAvailableBooks()).to.equal(1);
 
     await library.borrowBook(DEFAULT_TEST_ID);
@@ -159,8 +159,8 @@ describe("Library", function () {
     const Library = await ethers.getContractFactory('Library');
     const library = await Library.deploy();
 
-    await library.addNewBooks(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
-    await library.addNewBooks(2, "Testings", 1);
+    await library.addNewBook(DEFAULT_TEST_ID, DEFAULT_TEST_BOOK_NAME, DEFAULT_TEST_COPY_AMOUNT);
+    await library.addNewBook(2, "Testings", 1);
 
     const books1: Library.BookStructOutput[] = await library.getAllAvailableBooks();
     expect(books1.length).to.equal(2);
