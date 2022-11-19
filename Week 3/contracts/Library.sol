@@ -63,18 +63,6 @@ contract Library is Ownable {
         emit CopiesAddedToBook(_bookId, __idToBook[_bookId].availableCopies);
     }
 
-    //TODO: REMOVE
-    function getAllAvailableBooks() public view returns(Book[] memory available) {
-        available = new Book[](countOfAvailableBooks);
-        uint availableCounter = 0;
-        for (uint i = 0; i < __bookIds.length; ++i) {
-            Book memory book = __idToBook[__bookIds[i]];
-            if (book.availableCopies > 0) {
-                available[availableCounter++] = book;
-            }
-        }
-    }
-
     function borrowBook(uint _bookId) external onlyExistingIndex(_bookId) {
         if (bookAddressesCurrentlyBorrowing[_bookId][msg.sender] == true) {
             revert CannotBorrowMoreCopies();
@@ -117,7 +105,15 @@ contract Library is Ownable {
         emit BookReturned(_bookId);
     }
 
-    function isCurrentlyBorrowingBook(uint _bookId) external view returns (bool) {
+    function isCurrentlyBorrowingBook(uint _bookId) external view onlyExistingIndex(_bookId) returns (bool) {
         return bookAddressesCurrentlyBorrowing[_bookId][msg.sender];
+    }
+
+    function isBookAvailable(uint _bookId) external view onlyExistingIndex(_bookId) returns (bool) {
+        return __idToBook[_bookId].availableCopies > 0; 
+    }
+
+    function getAllBookIDs() external view returns (uint[] memory) {
+        return __bookIds;
     }
 }
